@@ -154,13 +154,23 @@ If you find issues, fix them inline. No need to re-review — just fix and move 
 
 After saving the plan, offer execution choice:
 
-**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
+**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Three execution options:**
 
-**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
+**1. Parallel Subagent-Driven (recommended)** - I group independent tasks into waves and dispatch multiple implementer subagents concurrently per wave, review between waves, then a broad final review. Maximizes subagent parallelism; fastest when tasks touch disjoint files/subsystems.
 
-**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
+**2. Subagent-Driven (sequential)** - I dispatch a fresh subagent per task, review between tasks, fast iteration. Best when tasks have dependencies or share files.
+
+**3. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints.
 
 **Which approach?"**
+
+**If Parallel Subagent-Driven chosen:**
+- **REQUIRED SUB-SKILLS:** Use superpowers:dispatching-parallel-agents + superpowers:subagent-driven-development
+- Partition the plan into waves of independent tasks (no shared files/state between concurrent tasks)
+- Dispatch one implementer subagent per task in the same response, all running concurrently
+- After each wave completes, dispatch task-reviewer subagents for the wave's diffs, then dispatch fix subagents for any Critical/Important findings before proceeding
+- Finish with a broad whole-branch code review (superpowers:requesting-code-review)
+- Fall back to sequential Subagent-Driven for any task that depends on another's output or edits the same files
 
 **If Subagent-Driven chosen:**
 - **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development

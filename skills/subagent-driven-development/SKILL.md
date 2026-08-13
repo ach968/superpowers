@@ -279,7 +279,7 @@ and fix-round diffs need it.
   a pointer to that ledger entry in the dispatch.
 - Record the implementer's agent identity from the dispatch result —
   fix-loop rounds 1-3 resume this agent.
-- Never dispatch multiple implementation subagents in parallel (conflicts).
+- Never dispatch multiple implementation subagents in parallel on tasks that share files/state (conflicts) — parallel dispatch is only safe for independent tasks with disjoint scope (see superpowers:dispatching-parallel-agents and the Parallel Subagent-Driven execution option in superpowers:writing-plans)
 
 Template: [implementer-prompt.md](implementer-prompt.md)
 
